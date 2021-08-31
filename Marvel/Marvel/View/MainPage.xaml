@@ -7,9 +7,9 @@
 
     <FlexLayout BackgroundColor="#E8121D" Direction="Column" >
         <Frame CornerRadius="5" BackgroundColor="Black" Margin="7,5" Padding="0" HeightRequest="45">
-            <local:ExtenderEntry HeightRequest="35"   Margin="10,0" TextColor="White" FontSize="15" Style="{StaticResource BebasEntryStyle}" PlaceholderColor="White" Placeholder="Procure por um personagem"></local:ExtenderEntry>
+            <local:ExtenderEntry HeightRequest="35" Margin="10,0" TextColor="White" FontSize="15" Style="{StaticResource BebasEntryStyle}" PlaceholderColor="White" Placeholder="Procure por um personagem"></local:ExtenderEntry>
         </Frame>
-        <Label Text="Marvel" Style="{StaticResource BebasBoldLabelStyle}" FontSize="68" TextColor="White" ></Label>
+        <Label Text="Comics" Margin="21,10,0,0" Style="{StaticResource BebasBoldLabelStyle}" FontSize="24" TextColor="White" ></Label>
     </FlexLayout>
 
 </ContentPage>
