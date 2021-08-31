@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marvel.App">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <!-- FontFamily -->
+            <OnPlatform x:Key="BebasBold"
+                    x:TypeArguments="x:String"
+                    iOS="bebas-neue-bold"
+                    Android="bebas-neue-bold.otf#Bebas"/>
+
+            <OnPlatform x:Key="Bebas"
+                    x:TypeArguments="x:String"
+                    iOS="Bebas-Regular"
+                    Android="Bebas-Regular.ttf#Bebas" />
+
+            <!-- style para Lable -->
+            <Style x:Key="BebasBoldLabelStyle"
+               TargetType="{x:Type Label}">
+                <Setter Property="FontFamily"
+             Value="{StaticResource BebasBold}" />
+            </Style>
+
+            <Style x:Key="BebasLabelStyle"
+               TargetType="{x:Type Label}">
+                <Setter Property="FontFamily"
+             Value="{StaticResource Bebas}" />
+            </Style>
+
+            <!-- style para Entry -->
+              <Style x:Key="BebasBoldEntryStyle"
+               TargetType="{x:Type Entry}">
+                    <Setter Property="FontFamily"
+             Value="{StaticResource BebasBold}" />
+                </Style>
+
+                <Style x:Key="BebasEntryStyle"
+               TargetType="{x:Type Entry}">
+                    <Setter Property="FontFamily"
+             Value="{StaticResource Bebas}" />
+                </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
