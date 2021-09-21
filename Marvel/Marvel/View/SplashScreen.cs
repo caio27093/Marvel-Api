@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.Collections.Generic;
 using System.Linq;
+using Marvel.Classes;
 
 namespace Marvel.View
 {
@@ -12,12 +13,9 @@ namespace Marvel.View
         public SplashScreen()
         {
 
-            BackgroundColor = Color.FromHex ( "#E8121D" );
-
-
             NavigationPage.SetHasNavigationBar(this, false);
+            var layout = new AbsoluteLayout ( );
 
-            var layout = new AbsoluteLayout();
             splashScreen = new Label
             {
                 Text = "MARVELOUS",
@@ -35,9 +33,10 @@ namespace Marvel.View
 
         protected override async void OnAppearing()
         {
-                base.OnAppearing();
-                await splashScreen.ScaleTo(1, 5000);
-                Application.Current.MainPage = new NavigationPage(new MainPage());
+            base.OnAppearing ( );
+            await this.ColorTo ( Color.FromRgb ( 255, 23, 41 ), Color.FromRgb ( 34, 34, 34 ), c => BackgroundColor = c, 3000 );
+            await splashScreen.FadeTo(0, 1000);
+            Application.Current.MainPage = new NavigationPage(new MainPage());
         }
     }
 }

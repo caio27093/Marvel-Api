@@ -13,8 +13,14 @@ namespace Marvel
         public MainPage()
         {
             InitializeComponent ();
+            CarregaTela ( );
         }
 
+        async void CarregaTela ( )
+        {
+            TelaTotal.Opacity = 0;
+            await TelaTotal.FadeTo ( 1, 2000 );
+        }
         List<string> Estados = new List<string>
         {
             "Acre",
