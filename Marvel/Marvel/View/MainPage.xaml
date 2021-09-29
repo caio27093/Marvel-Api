@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              NavigationPage.HasNavigationBar="False"
              xmlns:local="clr-namespace:Marvel.Renders" 
-             x:Class="Marvel.MainPage">
+             x:Class="Marvel.MainPage"
+             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions">
 
     <FlexLayout x:Name="TelaTotal" BackgroundColor="#202124" Direction="Column" >
         
@@ -20,17 +21,19 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackLayout x:Name="modoPesquisa" Grid.RowSpan="2" IsVisible="False" BackgroundColor="Transparent">
+            <StackLayout x:Name="modoPesquisa" Grid.RowSpan="2" IsVisible="True" BackgroundColor="Transparent">
                 <ListView x:Name="listaHerois" BackgroundColor="Transparent" SeparatorColor="Transparent" RowHeight="150" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Orientation="Horizontal" >
-                                    <Frame Padding="0" Margin="0" WidthRequest="150">
-                                        <Image Source="Logo" HeightRequest="50" WidthRequest="50"></Image>
+                                    <Frame Padding="10" Margin="10" WidthRequest="115" BackgroundColor="Black" CornerRadius="10" >
+                                        <Frame Padding="0" BackgroundColor="Transparent">
+                                            <Image Source="Logo" HeightRequest="50" WidthRequest="50" ></Image>
+                                        </Frame>
                                     </Frame>
                                     <StackLayout>
-                                        <Label Text="testsse" FontSize="26" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
+                                        <Label Text="testsse" FontSize="26" Margin="0,30,0,0" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
                                         <Label Text="Uma breve descricao sobre" FontSize="20" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
                                     </StackLayout>
                                 </StackLayout>
@@ -40,7 +43,7 @@
                 </ListView>
 
             </StackLayout>
-            <StackLayout Grid.RowSpan="2" BackgroundColor="Transparent" x:Name="modoPadrao" >
+            <StackLayout Grid.RowSpan="2" x:Name="modoPadrao" BackgroundColor="Transparent" >
                 <Grid ColumnSpacing="0">
                     <Grid.RowDefinitions >
                         <RowDefinition Height="30*" />
@@ -74,7 +77,35 @@
                         </StackLayout>
                     </Frame>
                     <Frame Grid.Row="1" BackgroundColor="Black" CornerRadius="7" Margin="15,0,15,0">
-                        <Image Source="Logo"></Image>
+                        <cv:CarouselViewControl  x:Name="Carrousel" Margin="0" ShowIndicators="True" ShowArrows="False" >
+                            <cv:CarouselViewControl.ItemTemplate>
+                                <DataTemplate >
+                                    <StackLayout>
+                                        <Grid ColumnSpacing="0">
+
+                                            <Grid.RowDefinitions >
+                                                <RowDefinition Height="90*" />
+                                                <RowDefinition Height="10*" />
+                                            </Grid.RowDefinitions>
+                                            <Frame BorderColor="Transparent" BackgroundColor="Transparent" CornerRadius="1" Margin="10,0,10,0" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="0">
+
+                                                <StackLayout Padding="0,0,0,0" BackgroundColor="#202124">
+                                                    <Frame Margin="0" Padding="0">
+                                                        <Image Source="{Binding ImagemUrl}"/>
+                                                    </Frame>
+                                                </StackLayout>
+                                            </Frame>
+
+                                            <StackLayout Grid.Row="1">
+                                                <Label Text="{Binding Nome}" Grid.Row="0" TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18" HorizontalTextAlignment="Center" ></Label>
+                                            </StackLayout>
+
+
+                                        </Grid>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </cv:CarouselViewControl.ItemTemplate>
+                        </cv:CarouselViewControl>
                     </Frame>
                     <Frame Grid.Row="2" BackgroundColor="Transparent" Padding="0" Margin="15">
                         <StackLayout Orientation="Horizontal">
