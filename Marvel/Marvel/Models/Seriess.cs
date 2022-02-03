@@ -224,7 +224,7 @@ public class Seriess
         public string ResourceURI { get; set; }
 
         [JsonProperty ( "urls" )]
-        public List<Url> Urls { get; set; }
+        public List<Urls> Urls { get; set; }
 
         [JsonProperty ( "series" )]
         public Series Series { get; set; }

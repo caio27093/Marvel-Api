@@ -4,6 +4,9 @@ using Xamarin.Essentials;
 using System.Collections.Generic;
 using System.Linq;
 using Marvel.Classes;
+using System.Net;
+using System.IO;
+using System.Text;
 
 namespace Marvel.View
 {
@@ -36,6 +39,8 @@ namespace Marvel.View
             base.OnAppearing ( );
             await this.ColorTo ( Color.FromRgb ( 255, 23, 41 ), Color.FromRgb ( 34, 34, 34 ), c => BackgroundColor = c, 3000 );
             await splashScreen.FadeTo(0, 1000);
+
+
             Application.Current.MainPage = new NavigationPage(new MainPage());
         }
     }

@@ -60,7 +60,7 @@
                                     <RowDefinition Height="1*" />
                                 </Grid.RowDefinitions>
 
-                                <Label Text="Quadrinhos" Grid.Row="0" TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18" ></Label>
+                                <Label Text="Quadrinhos Favoritos" Grid.Row="0" TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18" ></Label>
                                 <Frame Padding="0" Grid.Row="1" BackgroundColor="Transparent" >
 
                                     <ScrollView  HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" Orientation ="Horizontal">

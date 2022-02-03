@@ -1,8 +1,13 @@
 ﻿using Marvel.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
+using Flurl;
+using Flurl.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -70,7 +75,6 @@ namespace Marvel
             "Sergipe",
             "Tocantins"
         };
-
         List<CarrouselClass> CarrouselImg = new List<CarrouselClass>
         {
             new CarrouselClass { Nome = "Yato- O deus da calamidade", ImagemUrl = "https://images8.alphacoders.com/103/1039851.jpg"},
@@ -79,7 +83,6 @@ namespace Marvel
             new CarrouselClass { Nome = "Mirio - Lemillion", ImagemUrl = "https://wallpapercave.com/wp/wp4150780.jpg"},
             new CarrouselClass { Nome = "Shiro e Sora - Kuuhaku", ImagemUrl = "https://wallpapercave.com/wp/wp1825469.jpg"}
         };
-
         protected override void OnAppearing ( )
         {
             timer = new Timer ( TimeSpan.FromSeconds ( 5 ).TotalMilliseconds ) { AutoReset = true, Enabled = true };
@@ -95,7 +98,7 @@ namespace Marvel
         {
             Device.BeginInvokeOnMainThread ( ( ) =>
              {
-                 if ((CarrouselImg.Count-1)==Carrousel.Position)
+                 if ((CarrouselImg.Count - 1) == Carrousel.Position)
                  {
                      Carrousel.Position = 1;
                      return;
@@ -105,17 +108,49 @@ namespace Marvel
             );
         }
 
-        public MainPage()
+        public MainPage ( )
         {
-            InitializeComponent ();
+            InitializeComponent ( );
             CarregaTela ( );
             Carrousel.ItemsSource = CarrouselImg;
+            CarregaClasses ( );
         }
 
         async void CarregaTela ( )
         {
             TelaTotal.Opacity = 0;
             await TelaTotal.FadeTo ( 1, 2000 );
+        }
+
+        async void CarregaClasses()
+        {
+
+            #region GET QUADRINHOS
+            try
+            {
+                //string result;
+                //string url = ConstantesChaves.url_fixa + "/comics?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + //ConstantesChaves.hash;
+                //HttpWebRequest request;
+                //request = (HttpWebRequest)WebRequest.Create ( url );
+                // requisições de um jeito mais simples utilizando fluent http que é um pacote nuget
+
+
+                string result = await (ConstantesChaves.url_fixa +"/comics?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash)
+                //.AppendPathSegment ( "comics" ) // https://api.mysite.com/person
+                //.SetQueryParams ( new { a = 1, b = "2" } ) // https://api.mysite.com/person?a=1&b=2
+                //.WithOAuthBearerToken ( "my_oauth_token" )
+                //.PostJsonAsync ( new { first_name = "Frank", last_name = "Underwood" } ) // { "first_name": "Frank", "last_name": "Underwook" }
+                .GetJsonAsync ( );//< Quadrinhos> ( );
+                List<Quadrinhos> quadrinhos = new List<Quadrinhos> ( );
+                quadrinhos = JsonConvert.DeserializeObject<List<Quadrinhos>> ( result );
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            #endregion
         }
 
 
