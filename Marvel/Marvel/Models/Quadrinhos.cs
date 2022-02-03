@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -7,7 +7,7 @@ public class Quadrinhos
 {
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     [DataContract ( Name = "textObject" )]
-    private class TextObject
+    public class TextObject
     {
         private string type ;
         private string language ;
@@ -21,7 +21,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "url" )]
-    private class Url
+    public class Url
     {
         private string type ;
         private string url ;
@@ -33,7 +33,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "series" )]
-    private class Series
+    public class Series
     {
         private string resourceURI ;
         private string name ;
@@ -45,7 +45,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "variant" )]
-    private class Variant
+    public class Variant
     {
         private string resourceURI ;
         private string name ;
@@ -57,7 +57,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "collectedIssue" )]
-    private class CollectedIssue
+    public class CollectedIssue
     {
         private string resourceURI ;
         private string name ;
@@ -67,7 +67,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "dates" )]
-    private class Dates
+    public class Dates
     {
         private string type ;
         private object date ;
@@ -79,7 +79,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "price" )]
-    private class Price
+    public class Price
     {
         private string type ;
         private double price ;
@@ -91,7 +91,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "thumbnail" )]
-    private class Thumbnail
+    public class Thumbnail
     {
         private string path ;
         private string extension ;
@@ -103,7 +103,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "image" )]
-    private class Image
+    public class Image
     {
         private string path ;
         private string extension ;
@@ -115,7 +115,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "items" )]
-    private class Item
+    public class Item
     {
         private string resourceURI ;
         private string name ;
@@ -133,7 +133,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "creators" )]
-    private class Creators
+    public class Creators
     {
         private int available ;
         private string collectionURI ;
@@ -147,11 +147,11 @@ public class Quadrinhos
         [JsonProperty ( "returned" )]
         public int Returned { get => returned; set => returned = value; }
         [JsonProperty ( "items" )]
-        private List<Item> Items { get => items; set => items = value; }
+        public List<Item> Items { get => items; set => items = value; }
     }
 
     [DataContract ( Name = "characters" )]
-    private class Characters
+    public class Characters
     {
         private int available ;
         private string collectionURI ;
@@ -165,11 +165,11 @@ public class Quadrinhos
         [JsonProperty ( "returned" )]
         public int Returned { get => returned; set => returned = value; }
         [JsonProperty ( "items" )]
-        private List<Item> Items { get => items; set => items = value; }
+        public List<Item> Items { get => items; set => items = value; }
     }
 
     [DataContract ( Name = "stories" )]
-    private class Stories
+    public class Stories
     {
         private int available ;
         private string collectionURI ;
@@ -183,11 +183,11 @@ public class Quadrinhos
         [JsonProperty ( "returned" )]
         public int Returned { get => returned; set => returned = value; }
         [JsonProperty ( "items" )]
-        private List<Item> Items { get => items; set => items = value; }
+        public List<Item> Items { get => items; set => items = value; }
     }
 
     [DataContract ( Name = "events" )]
-    private class Events
+    public class Events
     {
         private int available ;
         private string collectionURI ;
@@ -205,7 +205,7 @@ public class Quadrinhos
     }
 
     [DataContract ( Name = "result" )]
-    private class Result
+    public class Result
     {
         private int id ;
         private int digitalId ;
@@ -270,35 +270,35 @@ public class Quadrinhos
         [JsonProperty ( "collections" )]
         public List<object> Collections { get => collections; set => collections = value; }
         [JsonProperty ( "textObjects" )]
-        private List<TextObject> TextObjects { get => textObjects; set => textObjects = value; }
+        public List<TextObject> TextObjects { get => textObjects; set => textObjects = value; }
         [JsonProperty ( "urls" )]
-        private List<Url> Urls { get => urls; set => urls = value; }
+        public List<Url> Urls { get => urls; set => urls = value; }
         [JsonProperty ( "series" )]
-        private Series Series { get => series; set => series = value; }
+        public Series Series { get => series; set => series = value; }
         [JsonProperty ( "variants" )]
-        private List<Variant> Variants { get => variants; set => variants = value; }
+        public List<Variant> Variants { get => variants; set => variants = value; }
         [JsonProperty ( "collectedIssues" )]
-        private List<CollectedIssue> CollectedIssues { get => collectedIssues; set => collectedIssues = value; }
+        public List<CollectedIssue> CollectedIssues { get => collectedIssues; set => collectedIssues = value; }
         [JsonProperty ( "dates" )]
-        private List<Dates> Dates { get => dates; set => dates = value; }
+        public List<Dates> Dates { get => dates; set => dates = value; }
         [JsonProperty ( "prices" )]
-        private List<Price> Prices { get => prices; set => prices = value; }
+        public List<Price> Prices { get => prices; set => prices = value; }
         [JsonProperty ( "thumbnail" )]
-        private Thumbnail Thumbnail { get => thumbnail; set => thumbnail = value; }
+        public Thumbnail Thumbnail { get => thumbnail; set => thumbnail = value; }
         [JsonProperty ( "images" )]
-        private List<Image> Images { get => images; set => images = value; }
+        public List<Image> Images { get => images; set => images = value; }
         [JsonProperty ( "creators" )]
-        private Creators Creators { get => creators; set => creators = value; }
+        public Creators Creators { get => creators; set => creators = value; }
         [JsonProperty ( "characters" )]
-        private Characters Characters { get => characters; set => characters = value; }
+        public Characters Characters { get => characters; set => characters = value; }
         [JsonProperty ( "stories" )]
-        private Stories Stories { get => stories; set => stories = value; }
+        public Stories Stories { get => stories; set => stories = value; }
         [JsonProperty ( "events" )]
-        private Events Events { get => events; set => events = value; }
+        public Events Events { get => events; set => events = value; }
     }
 
     [DataContract ( Name = "data" )]
-    private class Data
+    public class Data
     {
         private int offset ;
         private int limit ;
@@ -316,33 +316,36 @@ public class Quadrinhos
         [JsonProperty ( "count" )]
         public int Count { get => count; set => count = value; }
         [JsonProperty ( "results" )]
-        private List<Result> Results { get => results; set => results = value; }
+        public List<Result> Results { get => results; set => results = value; }
     }
 
-    private int code ;
-    private string status ;
-    private string copyright ;
-    private string attributionText ;
-    private string attributionHTML ;
-    private string etag ;
-    private Data data ;
 
-    [JsonProperty ( "code" )]
-    public int Code { get => code; set => code = value; }
-    [JsonProperty ( "status" )]
-    public string Status { get => status; set => status = value; }
+    public class Root
+    {
+        private int code;
+        private string status;
+        private string copyright;
+        private string attributionText;
+        private string attributionHTML;
+        private string etag;
+        private Data data;
 
-    [JsonProperty ( "copyright" )]
-    public string Copyright { get => copyright; set => copyright = value; }
-    [JsonProperty ( "attributionText" )]
-    public string AttributionText { get => attributionText; set => attributionText = value; }
-    [JsonProperty ( "attributionHTML" )]
-    public string AttributionHTML { get => attributionHTML; set => attributionHTML = value; }
-    [JsonProperty ( "etag" )]
-    public string Etag { get => etag; set => etag = value; }
-    [JsonProperty ( "data" )]
-    private Data Datas { get => data; set => data = value; }
-    
+        [JsonProperty("code")]
+        public int Code { get => code; set => code = value; }
+        [JsonProperty("status")]
+        public string Status { get => status; set => status = value; }
 
+        [JsonProperty("copyright")]
+        public string Copyright { get => copyright; set => copyright = value; }
+        [JsonProperty("attributionText")]
+        public string AttributionText { get => attributionText; set => attributionText = value; }
+        [JsonProperty("attributionHTML")]
+        public string AttributionHTML { get => attributionHTML; set => attributionHTML = value; }
+        [JsonProperty("etag")]
+        public string Etag { get => etag; set => etag = value; }
+        [JsonProperty("data")]
+        public Data Datas { get => data; set => data = value; }
+
+    }
 
 }
