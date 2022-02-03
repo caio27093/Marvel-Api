@@ -1,4 +1,4 @@
-﻿using Marvel.Classes;
+using Marvel.Classes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,8 @@ namespace Marvel
 {
     public partial class MainPage : ContentPage
     {
+        public static Quadrinhos.Root quadrinhos;
+        public static Personagens.Root personagens;
         private Timer timer;
         List<string> Estados = new List<string>
         {
@@ -75,14 +77,8 @@ namespace Marvel
             "Sergipe",
             "Tocantins"
         };
-        List<CarrouselClass> CarrouselImg = new List<CarrouselClass>
-        {
-            new CarrouselClass { Nome = "Yato- O deus da calamidade", ImagemUrl = "https://images8.alphacoders.com/103/1039851.jpg"},
-            new CarrouselClass { Nome = "Ozamu Dazai", ImagemUrl = "https://images8.alphacoders.com/113/thumb-1920-1131164.png"},
-            new CarrouselClass { Nome = "Kaneki Ken - The one eyed king", ImagemUrl = "https://i0.wp.com/pixelz.cc/wp-content/uploads/2019/02/tokyo-ghoul-ken-kaneki-personalities-uhd-4k-wallpaper.jpg"},
-            new CarrouselClass { Nome = "Mirio - Lemillion", ImagemUrl = "https://wallpapercave.com/wp/wp4150780.jpg"},
-            new CarrouselClass { Nome = "Shiro e Sora - Kuuhaku", ImagemUrl = "https://wallpapercave.com/wp/wp1825469.jpg"}
-        };
+        static List<CarrouselClass> CarrouselImg;
+
         protected override void OnAppearing ( )
         {
             timer = new Timer ( TimeSpan.FromSeconds ( 5 ).TotalMilliseconds ) { AutoReset = true, Enabled = true };
@@ -112,7 +108,6 @@ namespace Marvel
         {
             InitializeComponent ( );
             CarregaTela ( );
-            Carrousel.ItemsSource = CarrouselImg;
             CarregaClasses ( );
         }
 
@@ -125,25 +120,57 @@ namespace Marvel
         async void CarregaClasses()
         {
 
-            #region GET QUADRINHOS
+            #region GET INICIAIS
             try
             {
-                //string result;
-                //string url = ConstantesChaves.url_fixa + "/comics?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + //ConstantesChaves.hash;
-                //HttpWebRequest request;
-                //request = (HttpWebRequest)WebRequest.Create ( url );
-                // requisições de um jeito mais simples utilizando fluent http que é um pacote nuget
+                #region QUADRINHOS
+                string result;
+                string url = ConstantesChaves.url_fixa + "comics?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
+                HttpWebRequest request;
+                request = (HttpWebRequest)WebRequest.Create ( url );
+                request.Headers.Clear();
+                request.ContentType = "application/json";
+                request.Method = "GET";
+                WebResponse retorno = request.GetResponse();
 
+                using (Stream stream = request.GetResponse().GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
 
-                string result = await (ConstantesChaves.url_fixa +"/comics?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash)
-                //.AppendPathSegment ( "comics" ) // https://api.mysite.com/person
-                //.SetQueryParams ( new { a = 1, b = "2" } ) // https://api.mysite.com/person?a=1&b=2
-                //.WithOAuthBearerToken ( "my_oauth_token" )
-                //.PostJsonAsync ( new { first_name = "Frank", last_name = "Underwood" } ) // { "first_name": "Frank", "last_name": "Underwook" }
-                .GetJsonAsync ( );//< Quadrinhos> ( );
-                List<Quadrinhos> quadrinhos = new List<Quadrinhos> ( );
-                quadrinhos = JsonConvert.DeserializeObject<List<Quadrinhos>> ( result );
+                    result = reader.ReadToEnd();
+                }
+                quadrinhos = JsonConvert.DeserializeObject<Quadrinhos.Root> ( result );
+                #endregion
 
+                #region PERSONAGENS
+                string result1;
+                string url1 = ConstantesChaves.url_fixa + "characters?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
+                HttpWebRequest request1;
+                request1 = (HttpWebRequest)WebRequest.Create(url1);
+                request1.Headers.Clear();
+                request1.ContentType = "application/json";
+                request1.Method = "GET";
+                WebResponse retorno1 = request1.GetResponse();
+
+                using (Stream stream1 = request1.GetResponse().GetResponseStream())
+                {
+                    StreamReader reader1 = new StreamReader(stream1, Encoding.UTF8);
+
+                    result1 = reader1.ReadToEnd();
+                }
+                personagens = JsonConvert.DeserializeObject<Personagens.Root>(result1);
+                #endregion
+
+                List<CarrouselClass> CarrouselImg1 = new List<CarrouselClass>
+                {
+                    new CarrouselClass { Nome = personagens.Data.Results[0].Name, ImagemUrl = personagens.Data.Results[0].Thumbnail.Path+"."+personagens.Data.Results[0].Thumbnail.Extension},
+                    new CarrouselClass { Nome = personagens.Data.Results[1].Name, ImagemUrl = personagens.Data.Results[1].Thumbnail.Path+"."+personagens.Data.Results[1].Thumbnail.Extension},
+                    new CarrouselClass { Nome = personagens.Data.Results[2].Name, ImagemUrl = personagens.Data.Results[2].Thumbnail.Path+"."+personagens.Data.Results[2].Thumbnail.Extension},
+                    new CarrouselClass { Nome = personagens.Data.Results[3].Name, ImagemUrl = personagens.Data.Results[3].Thumbnail.Path+"."+personagens.Data.Results[3].Thumbnail.Extension},
+                    new CarrouselClass { Nome = personagens.Data.Results[4].Name, ImagemUrl = personagens.Data.Results[4].Thumbnail.Path+"."+personagens.Data.Results[4].Thumbnail.Extension}
+                };
+                CarrouselImg = CarrouselImg1;
+                Carrousel.ItemsSource = CarrouselImg1;
 
             }
             catch (Exception ex)
