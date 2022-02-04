@@ -12,13 +12,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Xamarin.Forms;
+using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace Marvel
 {
     public partial class MainPage : ContentPage
     {
         public static Quadrinhos.Root quadrinhos;
-        public static Personagens.Root personagens;
+        public static int primeiro;
+        public static int segundo;
+        public static int terceiro;
+        public static int quarto;
+        public static int quinto;
+        Personagens.Root personagens;
         private Timer timer;
         List<string> Estados = new List<string>
         {
@@ -79,45 +86,49 @@ namespace Marvel
         };
         static List<CarrouselClass> CarrouselImg;
 
-        protected override void OnAppearing ( )
+        protected override void OnAppearing()
         {
-            timer = new Timer ( TimeSpan.FromSeconds ( 5 ).TotalMilliseconds ) { AutoReset = true, Enabled = true };
+            timer = new Timer(TimeSpan.FromSeconds(5).TotalMilliseconds) { AutoReset = true, Enabled = true };
             timer.Elapsed += Timer_Elapsed;
-            base.OnAppearing ( );
+            base.OnAppearing();
         }
-        protected override void OnDisappearing ( )
+        protected override void OnDisappearing()
         {
-            timer?.Dispose ( );
-            base.OnDisappearing ( );
+            timer?.Dispose();
+            base.OnDisappearing();
         }
-        private void Timer_Elapsed ( object sender, ElapsedEventArgs e )
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Device.BeginInvokeOnMainThread ( ( ) =>
-             {
-                 if ((CarrouselImg.Count - 1) == Carrousel.Position)
-                 {
-                     Carrousel.Position = 1;
-                     return;
-                 }
-                 Carrousel.Position++;
-             }
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                if (CarrouselImg != null)
+                {
+                    if ((CarrouselImg.Count - 1) == Carrousel.Position)
+                    {
+                        Carrousel.Position = 1;
+                        return;
+                    }
+                    Carrousel.Position++;
+                }
+            }
             );
         }
 
-        public MainPage ( )
+        public MainPage()
         {
-            InitializeComponent ( );
-            CarregaTela ( );
-            CarregaClasses ( );
+            InitializeComponent();
+            CarregaTela();
+            CarregaClasses();
+            this.BindingContext = new StackLayoutViewModel();
         }
 
-        async void CarregaTela ( )
+        async void CarregaTela()
         {
             TelaTotal.Opacity = 0;
-            await TelaTotal.FadeTo ( 1, 2000 );
+            await TelaTotal.FadeTo(1, 2000);
         }
 
-        async void CarregaClasses()
+        void CarregaClasses()
         {
 
             #region GET INICIAIS
@@ -127,7 +138,7 @@ namespace Marvel
                 string result;
                 string url = ConstantesChaves.url_fixa + "comics?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
                 HttpWebRequest request;
-                request = (HttpWebRequest)WebRequest.Create ( url );
+                request = (HttpWebRequest)WebRequest.Create(url);
                 request.Headers.Clear();
                 request.ContentType = "application/json";
                 request.Method = "GET";
@@ -139,12 +150,12 @@ namespace Marvel
 
                     result = reader.ReadToEnd();
                 }
-                quadrinhos = JsonConvert.DeserializeObject<Quadrinhos.Root> ( result );
+                quadrinhos = JsonConvert.DeserializeObject<Quadrinhos.Root>(result);
                 #endregion
 
                 #region PERSONAGENS
                 string result1;
-                string url1 = ConstantesChaves.url_fixa + "characters?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
+                string url1 = ConstantesChaves.url_fixa + "characters?" +/*limit=20&*/"ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
                 HttpWebRequest request1;
                 request1 = (HttpWebRequest)WebRequest.Create(url1);
                 request1.Headers.Clear();
@@ -161,17 +172,17 @@ namespace Marvel
                 personagens = JsonConvert.DeserializeObject<Personagens.Root>(result1);
                 #endregion
 
-                Random primeiro = new Random();
-                Random segundo  = new Random();
-                Random terceiro = new Random();
-                Random quarto   = new Random();
-                Random quinto   = new Random();
-                primeiro.Next (0,99);
-                segundo.Next (0,99 );
-                terceiro.Next ( 0, 99 );
-                quarto.Next ( 0, 99 );
-                quinto.Next ( 0, 99 );
+                Random rdn = new Random();
 
+                primeiro = rdn.Next(0, 4);
+                segundo = rdn.Next(5, 9);
+                terceiro = rdn.Next(10, 14);
+                quarto = rdn.Next(15, 19);
+                quinto = rdn.Next(15, 19);
+                while (quinto == quarto)
+                {
+                    quinto = rdn.Next(15, 19);
+                }
 
                 List<CarrouselClass> CarrouselImg1 = new List<CarrouselClass>
                 {
@@ -184,42 +195,43 @@ namespace Marvel
                 CarrouselImg = CarrouselImg1;
                 Carrousel.ItemsSource = CarrouselImg1;
 
+
             }
             catch (Exception ex)
             {
-
+                Debug.WriteLine(ex);
             }
             #endregion
         }
 
 
-        async void ModoPesquisa ( bool apararece )
+        async void ModoPesquisa(bool apararece)
         {
-            await modoPesquisa.FadeTo ( Convert.ToInt32 ( apararece), 1000 );
+            await modoPesquisa.FadeTo(Convert.ToInt32(apararece), 1000);
         }
 
-        async void ModoNormal (bool apararece )
+        async void ModoNormal(bool apararece)
         {
-            await modoPadrao.FadeTo (Convert.ToInt32( apararece), 1000 );
+            await modoPadrao.FadeTo(Convert.ToInt32(apararece), 1000);
         }
 
 
-        private void txtBusca_TextChanged ( object sender, TextChangedEventArgs e )
+        private void txtBusca_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtBusca.Text.Length >= 3)
             {
-                
-                var sugestao = Estados.Where ( c => c.ToLower ( ).Contains ( txtBusca.Text.ToLower ( ) ) );
+
+                var sugestao = Estados.Where(c => c.ToLower().Contains(txtBusca.Text.ToLower()));
                 listaHerois.ItemsSource = sugestao;
-                ModoNormal( false);
+                ModoNormal(false);
                 modoPadrao.IsVisible = true;
-                ModoPesquisa( true);
+                ModoPesquisa(true);
             }
             else
             {
-                ModoPesquisa ( false );
+                ModoPesquisa(false);
                 modoPadrao.IsVisible = true;
-                ModoNormal ( true );
+                ModoNormal(true);
             }
         }
     }
