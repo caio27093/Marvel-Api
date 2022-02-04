@@ -144,7 +144,7 @@ namespace Marvel
 
                 #region PERSONAGENS
                 string result1;
-                string url1 = ConstantesChaves.url_fixa + "characters?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
+                string url1 = ConstantesChaves.url_fixa + "characters?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
                 HttpWebRequest request1;
                 request1 = (HttpWebRequest)WebRequest.Create(url1);
                 request1.Headers.Clear();
@@ -161,13 +161,25 @@ namespace Marvel
                 personagens = JsonConvert.DeserializeObject<Personagens.Root>(result1);
                 #endregion
 
+                Random primeiro = new Random();
+                Random segundo  = new Random();
+                Random terceiro = new Random();
+                Random quarto   = new Random();
+                Random quinto   = new Random();
+                primeiro.Next (0,99);
+                segundo.Next (0,99 );
+                terceiro.Next ( 0, 99 );
+                quarto.Next ( 0, 99 );
+                quinto.Next ( 0, 99 );
+
+
                 List<CarrouselClass> CarrouselImg1 = new List<CarrouselClass>
                 {
-                    new CarrouselClass { Nome = personagens.Data.Results[0].Name, ImagemUrl = personagens.Data.Results[0].Thumbnail.Path+"."+personagens.Data.Results[0].Thumbnail.Extension},
-                    new CarrouselClass { Nome = personagens.Data.Results[1].Name, ImagemUrl = personagens.Data.Results[1].Thumbnail.Path+"."+personagens.Data.Results[1].Thumbnail.Extension},
-                    new CarrouselClass { Nome = personagens.Data.Results[2].Name, ImagemUrl = personagens.Data.Results[2].Thumbnail.Path+"."+personagens.Data.Results[2].Thumbnail.Extension},
-                    new CarrouselClass { Nome = personagens.Data.Results[3].Name, ImagemUrl = personagens.Data.Results[3].Thumbnail.Path+"."+personagens.Data.Results[3].Thumbnail.Extension},
-                    new CarrouselClass { Nome = personagens.Data.Results[4].Name, ImagemUrl = personagens.Data.Results[4].Thumbnail.Path+"."+personagens.Data.Results[4].Thumbnail.Extension}
+                    new CarrouselClass { Nome = personagens.Data.Results[Convert.ToInt32(primeiro)].Name, ImagemUrl = personagens.Data.Results[Convert.ToInt32(primeiro)].Thumbnail.Path+"."+personagens.Data.Results[Convert.ToInt32(primeiro)].Thumbnail.Extension},
+                    new CarrouselClass { Nome = personagens.Data.Results[Convert.ToInt32(segundo)].Name, ImagemUrl = personagens.Data.Results[Convert.ToInt32(segundo)].Thumbnail.Path+"."+personagens.Data.Results[Convert.ToInt32(segundo)].Thumbnail.Extension},
+                    new CarrouselClass { Nome = personagens.Data.Results[Convert.ToInt32(terceiro)].Name, ImagemUrl = personagens.Data.Results[Convert.ToInt32(terceiro)].Thumbnail.Path+"."+personagens.Data.Results[Convert.ToInt32(terceiro)].Thumbnail.Extension},
+                    new CarrouselClass { Nome = personagens.Data.Results[Convert.ToInt32(quarto)].Name, ImagemUrl = personagens.Data.Results[Convert.ToInt32(quarto)].Thumbnail.Path+"."+personagens.Data.Results[Convert.ToInt32(quarto)].Thumbnail.Extension},
+                    new CarrouselClass { Nome = personagens.Data.Results[Convert.ToInt32(quinto)].Name, ImagemUrl = personagens.Data.Results[Convert.ToInt32(quinto)].Thumbnail.Path+"."+personagens.Data.Results[Convert.ToInt32(quinto)].Thumbnail.Extension}
                 };
                 CarrouselImg = CarrouselImg1;
                 Carrousel.ItemsSource = CarrouselImg1;
