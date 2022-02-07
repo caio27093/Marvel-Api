@@ -10,6 +10,12 @@ namespace Marvel.Classes
         public string Nome { get; set; }
         public string ImagemUrl { get; set; }
     }
+    public class PersonagemClassLista
+    {
+        public string Nome { get; set; }
+        public string ImagemUrl { get; set; }
+        public string Descricao { get; set; }
+    }
     public class StackLayoutClass
     {
         public string Detalhe { get; set; }

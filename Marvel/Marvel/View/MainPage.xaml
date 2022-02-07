@@ -10,7 +10,7 @@
     <FlexLayout x:Name="TelaTotal" BackgroundColor="#202124" Direction="Column" >
 
         <Frame x:Name="Pesquisa" Grid.RowSpan="1" CornerRadius="5" BackgroundColor="Black" Margin="15,5" Padding="0" HeightRequest="90">
-            <local:ExtenderEntry x:Name="txtBusca" HeightRequest="45" Margin="10,0"  TextChanged="txtBusca_TextChanged"
+            <local:ExtenderEntry x:Name="txtBusca" HeightRequest="45" Margin="10,0"  Completed="txtBusca_Completed" TextChanged="txtBusca_TextChanged"
  TextColor="White" FontSize="15" Style="{StaticResource BebasEntryStyle}" PlaceholderColor="White" Placeholder="Procure por um personagem"></local:ExtenderEntry>
         </Frame>
 
@@ -30,14 +30,19 @@
                                 <StackLayout Orientation="Horizontal" >
                                     <Frame Padding="10" Margin="10" WidthRequest="115" BackgroundColor="Black" CornerRadius="10" >
                                         <Frame Padding="0" BackgroundColor="Transparent">
-                                            <Image Source="Logo" HeightRequest="50" WidthRequest="50" ></Image>
+                                            <ff:CachedImage Aspect="AspectFill" Source="{Binding ImagemUrl}" HeightRequest="50" WidthRequest="100"/>
                                         </Frame>
                                     </Frame>
                                     <StackLayout>
-                                        <Label Text="testsse" FontSize="26" Margin="0,30,0,0" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
-                                        <Label Text="Uma breve descricao sobre" FontSize="20" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
+                                        <Label Text="{Binding Nome}" FontSize="26" Margin="0,30,0,0" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
+                                        <Label Text="{Binding Descricao}" FontSize="12" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
                                     </StackLayout>
+
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </StackLayout.GestureRecognizers>
                                 </StackLayout>
+
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -61,7 +66,7 @@
                                     <RowDefinition Height="1*" />
                                 </Grid.RowDefinitions>
 
-                                <Label Text="Quadrinhos Favoritos" Grid.Row="0" TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18" ></Label>
+                                <Label Text="Quadrinhos:" Grid.Row="0" TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18" ></Label>
                                 <Frame Padding="0" Grid.Row="1" BackgroundColor="Transparent" >
 
                                     <ScrollView  HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" Orientation ="Horizontal">

@@ -25,66 +25,11 @@ namespace Marvel
         public static int terceiro;
         public static int quarto;
         public static int quinto;
-        Personagens.Root personagens;
+        public static Personagens.Root personagens;
         private Timer timer;
-        List<string> Estados = new List<string>
-        {
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Acre",
-            "Alagoas",
-            "Amapá",
-            "Amazonas",
-            "Bahia",
-            "Ceará",
-            "Distrito Federal",
-            "Espírito Santo",
-            "Goiás",
-            "Maranhão",
-            "Mato Grosso",
-            "Mato Grosso do Sul",
-            "Minas Gerais",
-            "Pará",
-            "Paraíba",
-            "Paraná",
-            "Pernambuco",
-            "Piauí",
-            "Rio de Janeiro",
-            "Rio Grande do Norte",
-            "Rio Grande do Sul",
-            "Rondônia",
-            "Roraima",
-            "Santa Catarina",
-            "São Paulo",
-            "Sergipe",
-            "Tocantins"
-        };
+        public static Personagens.Root PersonagensPesquisado;
         static List<CarrouselClass> CarrouselImg;
+        static List<PersonagemClassLista> ListaImagem;
 
         protected override void OnAppearing()
         {
@@ -117,8 +62,8 @@ namespace Marvel
         public MainPage()
         {
             InitializeComponent();
-            CarregaTela();
-            CarregaClasses();
+            CarregaTela ();
+            CarregaClasses ( );
             this.BindingContext = new StackLayoutViewModel();
         }
 
@@ -128,7 +73,7 @@ namespace Marvel
             await TelaTotal.FadeTo(1, 2000);
         }
 
-        void CarregaClasses()
+        public void CarregaClasses()
         {
 
             #region GET INICIAIS
@@ -218,21 +163,61 @@ namespace Marvel
 
         private void txtBusca_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtBusca.Text.Length >= 3)
+            if (txtBusca.Text.Length == 0)
+            {
+                ModoPesquisa ( false );
+                modoPadrao.IsVisible = true;
+                ModoNormal ( true );
+            }
+        }
+
+        private void txtBusca_Completed ( object sender, EventArgs e )
+        {
+            try
             {
 
-                var sugestao = Estados.Where(c => c.ToLower().Contains(txtBusca.Text.ToLower()));
-                listaHerois.ItemsSource = sugestao;
-                ModoNormal(false);
+                #region BuscaPersonagem
+                string result;
+                string url = ConstantesChaves.url_fixa + "characters?" +/*limit=20&*/"ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash + "&name=" + txtBusca.Text;
+                HttpWebRequest request1;
+                request1 = (HttpWebRequest)WebRequest.Create ( url );
+                request1.Headers.Clear ( );
+                request1.ContentType = "application/json";
+                request1.Method = "GET";
+                WebResponse retorno1 = request1.GetResponse ( );
+
+                using (Stream stream1 = request1.GetResponse ( ).GetResponseStream ( ))
+                {
+                    StreamReader reader1 = new StreamReader ( stream1, Encoding.UTF8 );
+
+                    result = reader1.ReadToEnd ( );
+                }
+                PersonagensPesquisado = JsonConvert.DeserializeObject<Personagens.Root> ( result );
+
+                ListaImagem = new List<PersonagemClassLista>
+                {
+                    new PersonagemClassLista { Nome = PersonagensPesquisado.Data.Results[0].Name, ImagemUrl = PersonagensPesquisado.Data.Results[0].Thumbnail.Path+"."+PersonagensPesquisado.Data.Results[0].Thumbnail.Extension, Descricao = PersonagensPesquisado.Data.Results[0].Description}
+                };
+
+                listaHerois.ItemsSource = ListaImagem;
+                ModoNormal ( false );
                 modoPadrao.IsVisible = true;
-                ModoPesquisa(true);
+                ModoPesquisa ( true );
+                if (PersonagensPesquisado.Data.Results.Count()==0)
+                {
+                    DependencyService.Get<Interfaces.IMessage> ( ).LongAlert ( "Desculpa, mas não foi possivel achar nenhum personagem com esse nome." );
+                }
+                #endregion
             }
-            else
+            catch (Exception ex)
             {
-                ModoPesquisa(false);
-                modoPadrao.IsVisible = true;
-                ModoNormal(true);
+                Debug.WriteLine ( ex );
             }
+        }
+
+        private void TapGestureRecognizer_Tapped ( object sender, EventArgs e )
+        {
+            Application.Current.MainPage = new NavigationPage ( new View.DetalhesDaPagina( ) );
         }
     }
 }

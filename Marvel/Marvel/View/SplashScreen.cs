@@ -36,6 +36,7 @@ namespace Marvel.View
 
         protected override async void OnAppearing()
         {
+
             base.OnAppearing ( );
             await this.ColorTo ( Color.FromRgb ( 255, 23, 41 ), Color.FromRgb ( 34, 34, 34 ), c => BackgroundColor = c, 3000 );
             await splashScreen.FadeTo(0, 1000);

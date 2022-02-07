@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="MessageAndroid.cs" />
     <Compile Include="Render\ExtenderSearchBarRender.cs" />
     <Compile Include="Render\ExtenderEntryRender.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
