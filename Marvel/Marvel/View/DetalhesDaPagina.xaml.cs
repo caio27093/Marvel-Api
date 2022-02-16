@@ -16,5 +16,10 @@ namespace Marvel.View
         {
             InitializeComponent ( );
         }
+
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -193,13 +193,17 @@ namespace Marvel
                     result = reader1.ReadToEnd ( );
                 }
                 PersonagensPesquisado = JsonConvert.DeserializeObject<Personagens.Root> ( result );
-
-                ListaImagem = new List<PersonagemClassLista>
+                if (PersonagensPesquisado.Data.Results.Count()==1)
                 {
-                    new PersonagemClassLista { Nome = PersonagensPesquisado.Data.Results[0].Name, ImagemUrl = PersonagensPesquisado.Data.Results[0].Thumbnail.Path+"."+PersonagensPesquisado.Data.Results[0].Thumbnail.Extension, Descricao = PersonagensPesquisado.Data.Results[0].Description}
-                };
 
-                listaHerois.ItemsSource = ListaImagem;
+                    ListaImagem = new List<PersonagemClassLista>
+                    {
+                        new PersonagemClassLista { Nome = PersonagensPesquisado.Data.Results[0].Name, ImagemUrl = PersonagensPesquisado.Data.Results[0].Thumbnail.Path+"."+PersonagensPesquisado.Data.Results[0].Thumbnail.Extension, Descricao = PersonagensPesquisado.Data.Results[0].Description}
+                    };
+
+                    BindableLayout.SetItemsSource(listaHerois, ListaImagem);
+                    //listaHerois.SetBinding(BindableLayout.ItemsSourceProperty,"");// = ListaImagem;//passar pro stack
+                }
                 ModoNormal ( false );
                 modoPadrao.IsVisible = true;
                 ModoPesquisa ( true );
@@ -215,9 +219,6 @@ namespace Marvel
             }
         }
 
-        private void TapGestureRecognizer_Tapped ( object sender, EventArgs e )
-        {
-            Application.Current.MainPage = new NavigationPage ( new View.DetalhesDaPagina( ) );
-        }
+
     }
 }

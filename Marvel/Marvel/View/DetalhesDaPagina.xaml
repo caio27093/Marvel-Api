@@ -4,9 +4,21 @@
              x:Class="Marvel.View.DetalhesDaPagina">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView ItemSelected="ListView_ItemSelected">
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>mono</x:String>
+                        <x:String>monodroid</x:String>
+                        <x:String>monotouch</x:String>
+                        <x:String>monorail</x:String>
+                        <x:String>monodevelop</x:String>
+                        <x:String>monotone</x:String>
+                        <x:String>monopoly</x:String>
+                        <x:String>monomodal</x:String>
+                        <x:String>mononucleosis</x:String>
+                    </x:Array>
+                </ListView.ItemsSource>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

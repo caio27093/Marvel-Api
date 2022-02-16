@@ -13,8 +13,6 @@
             <local:ExtenderEntry x:Name="txtBusca" HeightRequest="45" Margin="10,0"  Completed="txtBusca_Completed" TextChanged="txtBusca_TextChanged"
  TextColor="White" FontSize="15" Style="{StaticResource BebasEntryStyle}" PlaceholderColor="White" Placeholder="Procure por um personagem"></local:ExtenderEntry>
         </Frame>
-
-
         <Grid x:Name="Corpo">
 
             <Grid.RowDefinitions>
@@ -22,34 +20,32 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackLayout x:Name="modoPesquisa" Grid.RowSpan="2" IsVisible="True" BackgroundColor="Transparent">
-                <ListView x:Name="listaHerois" BackgroundColor="Transparent" SeparatorColor="Transparent" RowHeight="150" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Orientation="Horizontal" >
-                                    <Frame Padding="10" Margin="10" WidthRequest="115" BackgroundColor="Black" CornerRadius="10" >
+            <FlexLayout x:Name="modoPesquisa" Grid.RowSpan="2" IsVisible="True" BackgroundColor="Transparent">
+
+                <StackLayout x:Name="listaHerois"   BackgroundColor="Transparent"  >
+                    <BindableLayout.ItemTemplate >
+                        <DataTemplate  >
+                            <StackLayout Orientation="Vertical" BackgroundColor="Transparent">
+                                    <Frame Padding="10" Margin="10" WidthRequest="400" BackgroundColor="Black" CornerRadius="10" >
                                         <Frame Padding="0" BackgroundColor="Transparent">
-                                            <ff:CachedImage Aspect="AspectFill" Source="{Binding ImagemUrl}" HeightRequest="50" WidthRequest="100"/>
+                                            <ff:CachedImage Aspect="AspectFill" Source="{Binding ImagemUrl}" HeightRequest="50" WidthRequest="100">
+                                            </ff:CachedImage>
                                         </Frame>
                                     </Frame>
-                                    <StackLayout>
-                                        <Label Text="{Binding Nome}" FontSize="26" Margin="0,30,0,0" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
-                                        <Label Text="{Binding Descricao}" FontSize="12" TextColor="White" Style="{StaticResource BebasEntryStyle}"></Label>
-                                    </StackLayout>
+                                    <Label Text="{Binding Nome}" FontSize="26" Margin="0,10,0,0" TextColor="White" Style="{StaticResource BebasEntryStyle}">
+                                    </Label>
+                                    <Label Text="{Binding Descricao}" FontSize="12" TextColor="White" Style="{StaticResource BebasEntryStyle}">
+                                    </Label>
 
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                    </StackLayout.GestureRecognizers>
+
                                 </StackLayout>
 
-                            </ViewCell>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
 
-            </StackLayout>
-            <StackLayout Grid.RowSpan="2" x:Name="modoPadrao" BackgroundColor="Transparent" >
+            </FlexLayout>
+            <FlexLayout Grid.RowSpan="2" x:Name="modoPadrao" BackgroundColor="Transparent" >
                 <Grid ColumnSpacing="0">
                     <Grid.RowDefinitions >
                         <RowDefinition Height="30*" />
@@ -86,6 +82,7 @@
                         </StackLayout>
                     </Frame>
                     <Frame Grid.Row="1" BackgroundColor="Black" CornerRadius="7" Margin="15,0,15,0">
+
                         <cv:CarouselViewControl  x:Name="Carrousel" Margin="0" ShowIndicators="True" ShowArrows="False" >
                             <cv:CarouselViewControl.ItemTemplate>
                                 <DataTemplate >
@@ -143,7 +140,8 @@
                                             </Grid.RowDefinitions>
 
 
-                                            <Image Source="spider" Grid.Row="0" Grid.Column="0" Margin="0,10,10,10"></Image>
+                                            <Image Source="spider" Grid.Row="0" Grid.Column="0" Margin="0,10,10,10"/>
+
                                             <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="Transparent" Padding="0" VerticalOptions="End">
                                                 <Label Text="Personagens"  TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18" Margin="0,0,15,0" HorizontalTextAlignment="End" VerticalTextAlignment="End" ></Label>
                                             </Frame>
@@ -180,7 +178,10 @@
                     </Frame>
 
                 </Grid>
-            </StackLayout>
+            </FlexLayout>
+
+
+
         </Grid>
 
 
