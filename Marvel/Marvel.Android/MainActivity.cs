@@ -4,6 +4,8 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Android.Content.Res;
+using System.IO;
 
 namespace Marvel.Droid
 {
@@ -19,6 +21,17 @@ namespace Marvel.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(34, 34, 34));
+
+            AssetManager assets = this.Assets;
+            using (StreamReader sr = new StreamReader(assets.Open("comic.json")))
+            {
+                MessageAndroid.comics = sr.ReadToEnd();
+            }
+            AssetManager assets1 = this.Assets;
+            using (StreamReader sr = new StreamReader(assets1.Open("characters.json")))
+            {
+                MessageAndroid.heroes = sr.ReadToEnd();
+            }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

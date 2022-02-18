@@ -8,5 +8,7 @@ namespace Marvel.Interfaces
     {
         void LongAlert ( string message );
         void ShortAlert ( string message );
+        string PegaJson();
+        string PegaJsonPersonagens();
     }
 }

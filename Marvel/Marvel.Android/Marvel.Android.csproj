@@ -80,6 +80,8 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\bebas-neue-bold.otf" />
     <AndroidAsset Include="Assets\Bebas-Regular.ttf" />
+    <AndroidAsset Include="Assets\comic.json" />
+    <AndroidAsset Include="Assets\characters.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

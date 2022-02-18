@@ -63,7 +63,7 @@ namespace Marvel
         {
             InitializeComponent();
             CarregaTela ();
-            CarregaClasses ( );
+            CarregaClassesAsync ( );
             this.BindingContext = new StackLayoutViewModel();
         }
 
@@ -73,61 +73,31 @@ namespace Marvel
             await TelaTotal.FadeTo(1, 2000);
         }
 
-        public void CarregaClasses()
+        public void CarregaClassesAsync()
         {
 
             #region GET INICIAIS
             try
             {
                 #region QUADRINHOS
-                string result;
-                string url = ConstantesChaves.url_fixa + "comics?ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
-                HttpWebRequest request;
-                request = (HttpWebRequest)WebRequest.Create(url);
-                request.Headers.Clear();
-                request.ContentType = "application/json";
-                request.Method = "GET";
-                WebResponse retorno = request.GetResponse();
 
-                using (Stream stream = request.GetResponse().GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-
-                    result = reader.ReadToEnd();
-                }
-                quadrinhos = JsonConvert.DeserializeObject<Quadrinhos.Root>(result);
+               var comicsjson = DependencyService.Get<Interfaces.IMessage>().PegaJson();
+                quadrinhos = JsonConvert.DeserializeObject<Quadrinhos.Root>(comicsjson);
                 #endregion
 
                 #region PERSONAGENS
-                string result1;
-                string url1 = ConstantesChaves.url_fixa + "characters?" +/*limit=20&*/"ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
-                HttpWebRequest request1;
-                request1 = (HttpWebRequest)WebRequest.Create(url1);
-                request1.Headers.Clear();
-                request1.ContentType = "application/json";
-                request1.Method = "GET";
-                WebResponse retorno1 = request1.GetResponse();
 
-                using (Stream stream1 = request1.GetResponse().GetResponseStream())
-                {
-                    StreamReader reader1 = new StreamReader(stream1, Encoding.UTF8);
-
-                    result1 = reader1.ReadToEnd();
-                }
-                personagens = JsonConvert.DeserializeObject<Personagens.Root>(result1);
+                var heroesjson = DependencyService.Get<Interfaces.IMessage>().PegaJsonPersonagens();
+                personagens = JsonConvert.DeserializeObject<Personagens.Root>(heroesjson);
                 #endregion
 
                 Random rdn = new Random();
 
-                primeiro = rdn.Next(0, 4);
-                segundo = rdn.Next(5, 9);
-                terceiro = rdn.Next(10, 14);
-                quarto = rdn.Next(15, 19);
-                quinto = rdn.Next(15, 19);
-                while (quinto == quarto)
-                {
-                    quinto = rdn.Next(15, 19);
-                }
+                primeiro = rdn.Next(0, 19);
+                segundo = rdn.Next(20, 39);
+                terceiro = rdn.Next(40, 59);
+                quarto = rdn.Next(60, 79);
+                quinto = rdn.Next(80, 99);
 
                 List<CarrouselClass> CarrouselImg1 = new List<CarrouselClass>
                 {
