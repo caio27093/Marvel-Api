@@ -20,11 +20,11 @@ namespace Marvel
     public partial class MainPage : ContentPage
     {
         public static Quadrinhos.Root quadrinhos;
-        public static int primeiro;
-        public static int segundo;
-        public static int terceiro;
-        public static int quarto;
-        public static int quinto;
+        public int primeiro;
+        public int segundo;
+        public int terceiro;
+        public int quarto;
+        public int quinto;
         public static Personagens.Root personagens;
         private Timer timer;
         public static Personagens.Root PersonagensPesquisado;
@@ -98,7 +98,71 @@ namespace Marvel
                 terceiro = rdn.Next(40, 59);
                 quarto = rdn.Next(60, 79);
                 quinto = rdn.Next(80, 99);
+                bool continua = true;
+                if (personagens.Data.Results[Convert.ToInt32 ( primeiro )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                {
+                    do
+                    {
+                        primeiro = rdn.Next ( 0, 19 );
+                        if (personagens.Data.Results[Convert.ToInt32 ( primeiro )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                        {
+                            continua = false;
+                        }
+                    } while (continua);
+                    continua = true;
+                }
 
+                if (personagens.Data.Results[Convert.ToInt32 ( segundo )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                {
+                    do
+                    {
+                        segundo = rdn.Next ( 20, 39 );
+                        if (personagens.Data.Results[Convert.ToInt32 ( segundo )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                        {
+                            continua = false;
+                        }
+                    } while (continua);
+                    continua = true;
+                }
+
+                if (personagens.Data.Results[Convert.ToInt32 ( terceiro )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                {
+                    do
+                    {
+                        terceiro = rdn.Next ( 40, 59 );
+                        if (personagens.Data.Results[Convert.ToInt32 ( terceiro )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                        {
+                            continua = false;
+                        }
+                    } while (continua);
+                    continua = true;
+                }
+
+                if (personagens.Data.Results[Convert.ToInt32 ( quarto )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                {
+                    do
+                    {
+                        quarto = rdn.Next ( 60, 79 );
+                        if (personagens.Data.Results[Convert.ToInt32 ( quarto )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                        {
+                            continua = false;
+                        }
+                    } while (continua);
+                    continua = true;
+                }
+
+                if (personagens.Data.Results[Convert.ToInt32 ( quinto )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                {
+                    do
+                    {
+                        quinto = rdn.Next ( 80, 99 );
+                        if (personagens.Data.Results[Convert.ToInt32 ( quinto )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                        {
+                            continua = false;
+                        }
+                    } while (continua);
+                    continua = true;
+                }
                 List<CarrouselClass> CarrouselImg1 = new List<CarrouselClass>
                 {
                     new CarrouselClass { Nome = personagens.Data.Results[Convert.ToInt32(primeiro)].Name, ImagemUrl = personagens.Data.Results[Convert.ToInt32(primeiro)].Thumbnail.Path+"."+personagens.Data.Results[Convert.ToInt32(primeiro)].Thumbnail.Extension},
