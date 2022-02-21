@@ -253,6 +253,9 @@ namespace Marvel
             }
         }
 
-
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Application.Current.MainPage = new NavigationPage(new View.DetalhesDaPagina());
+        }
     }
 }

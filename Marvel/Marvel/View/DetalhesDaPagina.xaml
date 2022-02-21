@@ -1,24 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             xmlns:local="clr-namespace:Marvel.Renders" 
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="Marvel.View.DetalhesDaPagina">
-    <ContentPage.Content>
-        <StackLayout>
-            <ListView ItemSelected="ListView_ItemSelected">
-                <ListView.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>mono</x:String>
-                        <x:String>monodroid</x:String>
-                        <x:String>monotouch</x:String>
-                        <x:String>monorail</x:String>
-                        <x:String>monodevelop</x:String>
-                        <x:String>monotone</x:String>
-                        <x:String>monopoly</x:String>
-                        <x:String>monomodal</x:String>
-                        <x:String>mononucleosis</x:String>
-                    </x:Array>
-                </ListView.ItemsSource>
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>
+    <StackLayout BackgroundColor="Black" >
+        <Frame BackgroundColor="Transparent"  Padding="0">
+            <Label Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="50"></Label>
+        </Frame>
+        <Frame CornerRadius="15"  BackgroundColor="#202124" Padding="25" HeightRequest="1.0" >
+            <FlexLayout Direction="Row" Wrap="Wrap"  AlignItems="Center" >
+                <Label Text="a" TextColor="White"></Label>
+            </FlexLayout>
+        </Frame>
+    </StackLayout>
 </ContentPage>

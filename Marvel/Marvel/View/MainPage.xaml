@@ -154,6 +154,9 @@
                                             </Frame>
 
                                         </Grid>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" ></TapGestureRecognizer>
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </Frame>
                                 <Frame Grid.Column="1" BackgroundColor="Black" Margin="10,0,0,0" WidthRequest="200" CornerRadius="7" Padding="0,0,0,15" >
