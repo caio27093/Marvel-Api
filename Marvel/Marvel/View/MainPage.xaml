@@ -180,6 +180,9 @@
                                             </Frame>
 
                                         </Grid>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" ></TapGestureRecognizer>
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </Frame>
 

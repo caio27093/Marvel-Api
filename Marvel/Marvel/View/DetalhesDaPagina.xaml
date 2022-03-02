@@ -6,14 +6,52 @@
              xmlns:local="clr-namespace:Marvel.Renders" 
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="Marvel.View.DetalhesDaPagina">
-    <StackLayout BackgroundColor="Black" >
-        <Frame BackgroundColor="Transparent"  Padding="0">
-            <Label Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="50"></Label>
-        </Frame>
-        <Frame CornerRadius="15"  BackgroundColor="#202124" Padding="25" HeightRequest="1.0" >
-            <FlexLayout Direction="Row" Wrap="Wrap"  AlignItems="Center" >
-                <Label Text="a" TextColor="White"></Label>
-            </FlexLayout>
-        </Frame>
-    </StackLayout>
+    <RelativeLayout BackgroundColor="Black" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0" BackgroundColor="Transparent"  Padding="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="45" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="50"/>
+                    <Label Grid.Column="1" x:Name="txttitulo" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="Carregando..." TextColor="White" FontSize="28" VerticalTextAlignment="Center" HorizontalOptions="Center"/>
+                </Grid>
+            </Frame>
+            <Frame Grid.Row="1" CornerRadius="15" Margin="15,0,15,0" BackgroundColor="#202124" Padding="25" VerticalOptions="Fill">
+                <FlexLayout Direction="Row" Wrap="Wrap"  AlignItems="Center" >
+                  <!--#region -->
+                    <StackLayout WidthRequest="110">
+                        <Frame  BackgroundColor="Black" Padding="0" Margin="15,0,15,0" CornerRadius="7" >
+                            <Image Source="spider"/>
+                        </Frame>
+                        <Label Text="Personagens"  TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18"  HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                  <!--#endregion-->
+                    
+
+                </FlexLayout>
+            </Frame>
+            <Frame Grid.Row="2" BackgroundColor="Transparent"  Padding="0" VerticalOptions="End">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45"/>
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="45" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="1" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="40"/>
+                    <Label Grid.Column="2"  Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&gt;" TextColor="White" HorizontalOptions="End" FontSize="40" />
+                </Grid>
+            </Frame>
+        </Grid>
+    </RelativeLayout>
 </ContentPage>
