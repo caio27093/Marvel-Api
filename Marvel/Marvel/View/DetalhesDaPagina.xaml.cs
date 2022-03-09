@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Marvel.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,8 @@ namespace Marvel.View
     [XamlCompilation ( XamlCompilationOptions.Compile )]
     public partial class DetalhesDaPagina : ContentPage
     {
-        public static int offset_Personagens;
-        public static int offset_Quadrinhos;
+        public static int offset_Personagens = 1;
+        public static int offset_Quadrinhos = 1;
 
         public DetalhesDaPagina (int tipoTela)
         {
@@ -22,11 +23,9 @@ namespace Marvel.View
                 txttitulo.Text = "Quadinhos";
             else
                 txttitulo.Text = "Personagens";
+            this.BindingContext = new DetalhesViewModel(tipoTela);
         }
 
-        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
 
-        }
     }
 }

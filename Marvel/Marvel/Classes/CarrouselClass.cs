@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Marvel.View;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -21,6 +22,12 @@ namespace Marvel.Classes
         public string Detalhe { get; set; }
         public string ImagemUrl { get; set; }
     }
+    public class DetalhesClass
+    {
+        public string Detalhe { get; set; }
+        public string ImagemUrl { get; set; }
+        public string More { get; set; }
+    }
     public class StackLayoutViewModel
     {
 
@@ -31,6 +38,7 @@ namespace Marvel.Classes
         public int quinto;
         public StackLayoutViewModel()
         {
+            string imagemIndisponivel = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
             Random rdn = new Random ( );
             primeiro = rdn.Next ( 0, 19 );
             segundo = rdn.Next ( 20, 39 );
@@ -38,12 +46,12 @@ namespace Marvel.Classes
             quarto = rdn.Next ( 60, 79 );
             quinto = rdn.Next ( 80, 99 );
             bool continua = true;
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( primeiro )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( primeiro )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
                     primeiro = rdn.Next ( 0, 19 );
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( primeiro )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( primeiro )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -51,12 +59,12 @@ namespace Marvel.Classes
                 continua = true;
             }
 
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( segundo )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( segundo )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
                     segundo = rdn.Next ( 20, 39 );
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( segundo )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( segundo )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -64,12 +72,12 @@ namespace Marvel.Classes
                 continua = true;
             }
 
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( terceiro )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( terceiro )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
                     terceiro = rdn.Next ( 40, 59 );
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( terceiro )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( terceiro )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -77,12 +85,12 @@ namespace Marvel.Classes
                 continua = true;
             }
 
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quarto )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quarto )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
                     quarto = rdn.Next ( 60, 79 );
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quarto )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quarto )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -90,12 +98,12 @@ namespace Marvel.Classes
                 continua = true;
             }
 
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quinto )].Thumbnail.Path == "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quinto )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
                     quinto = rdn.Next ( 80, 99 );
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quinto )].Thumbnail.Path != "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available")
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quinto )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -113,4 +121,37 @@ namespace Marvel.Classes
         }
         public ObservableCollection<StackLayoutClass> Quadrinhos { get; set; }
     }
+
+
+
+    public class DetalhesViewModel
+    {
+        public DetalhesViewModel(int tipo)
+        {
+            if (tipo==1)
+            {
+                //Quadrinhos
+                for (int i = DetalhesDaPagina.offset_Quadrinhos; i < (DetalhesDaPagina.offset_Quadrinhos+15); i++)
+                {
+
+                    Detalhes.Add(new DetalhesClass() { Detalhe = MainPage.quadrinhos.Datas.Results[Convert.ToInt32(i)].Description , ImagemUrl= MainPage.quadrinhos.Datas.Results[Convert.ToInt32(i)].Thumbnail.Path + "." + MainPage.quadrinhos.Datas.Results[Convert.ToInt32(i)].Thumbnail.Extension });
+
+                }
+            }
+            else
+            {
+                //Personagens
+                for (int i = DetalhesDaPagina.offset_Personagens; i < (DetalhesDaPagina.offset_Personagens + 15); i++)
+                {
+
+                    Detalhes.Add(new DetalhesClass() { Detalhe = MainPage.personagens.Data.Results[Convert.ToInt32(i)].Description, ImagemUrl = MainPage.personagens.Data.Results[Convert.ToInt32(i)].Thumbnail.Path + "." + MainPage.personagens.Data.Results[Convert.ToInt32(i)].Thumbnail.Extension });
+
+                }
+            }
+
+
+        }
+        public ObservableCollection<DetalhesClass> Detalhes = new ObservableCollection<DetalhesClass>();
+    }
+
 }

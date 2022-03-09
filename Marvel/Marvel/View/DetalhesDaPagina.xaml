@@ -26,15 +26,22 @@
                 </Grid>
             </Frame>
             <Frame Grid.Row="1" CornerRadius="15" Margin="15,0,15,0" BackgroundColor="#202124" Padding="25" VerticalOptions="Fill">
-                <FlexLayout Direction="Row" Wrap="Wrap"  AlignItems="Center" >
-                  <!--#region -->
-                    <StackLayout WidthRequest="110">
-                        <Frame  BackgroundColor="Black" Padding="0" Margin="15,0,15,0" CornerRadius="7" >
-                            <Image Source="spider"/>
-                        </Frame>
-                        <Label Text="Personagens"  TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18"  HorizontalTextAlignment="Center"/>
-                    </StackLayout>
-                  <!--#endregion-->
+                <FlexLayout x:Name="lst" Direction="Row" Wrap="Wrap"  AlignItems="Center" >
+                    <!--#region -->
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate  >
+
+                            <StackLayout WidthRequest="100">
+                                <Frame  BackgroundColor="Black" Padding="0" Margin="15,0,15,0" CornerRadius="7" >
+                                    <ff:CachedImage Source="{Binding ImagemUrl}"/>
+                                </Frame>
+                                <Label Text="{Binding Detalhe}"  TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18"  HorizontalTextAlignment="Center"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+
+                    <!--#endregion-->
                     
 
                 </FlexLayout>
@@ -43,13 +50,15 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="45"/>
-                        <ColumnDefinition Width="50*" />
-                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="33*" />
+                        <ColumnDefinition Width="33*" />
+                        <ColumnDefinition Width="33*" />
                         <ColumnDefinition Width="45" />
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Column="1" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="40"/>
-                    <Label Grid.Column="2"  Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&gt;" TextColor="White" HorizontalOptions="End" FontSize="40" />
+                    <Button Grid.Column="2" Text="Procurar"></Button>
+                    <Label Grid.Column="3"  Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&gt;" TextColor="White" HorizontalOptions="End" FontSize="40" />
                 </Grid>
             </Frame>
         </Grid>
