@@ -260,7 +260,7 @@ namespace Marvel
 
         private void TapGestureRecognizer_Tapped_1 ( object sender, EventArgs e )
         {
-            Application.Current.MainPage = new NavigationPage ( new View.DetalhesDaPagina ( 0 ) );
+            Application.Current.MainPage = new NavigationPage ( new View.DetalhesDaPagina ( 1 ) );
         }
     }
 }

@@ -12018,19 +12018,25 @@ namespace Marvel.Droid
 			public const int Prev = 2131165314;
 			
 			// aapt resource value: 0x7F070083
-			public const int spider = 2131165315;
+			public const int search = 2131165315;
 			
 			// aapt resource value: 0x7F070084
-			public const int tooltip_frame_dark = 2131165316;
+			public const int search1 = 2131165316;
 			
 			// aapt resource value: 0x7F070085
-			public const int tooltip_frame_light = 2131165317;
+			public const int spider = 2131165317;
 			
 			// aapt resource value: 0x7F070086
-			public const int Up = 2131165318;
+			public const int tooltip_frame_dark = 2131165318;
 			
 			// aapt resource value: 0x7F070087
-			public const int watermark = 2131165319;
+			public const int tooltip_frame_light = 2131165319;
+			
+			// aapt resource value: 0x7F070088
+			public const int Up = 2131165320;
+			
+			// aapt resource value: 0x7F070089
+			public const int watermark = 2131165321;
 			
 			static Drawable()
 			{

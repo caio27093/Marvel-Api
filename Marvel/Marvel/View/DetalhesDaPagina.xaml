@@ -10,7 +10,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="100*"></RowDefinition>
                 <RowDefinition Height="80"></RowDefinition>
             </Grid.RowDefinitions>
             <Frame Grid.Row="0" BackgroundColor="Transparent"  Padding="0">
@@ -21,30 +21,39 @@
                         <ColumnDefinition Width="45" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="50"/>
+                    <Label Grid.Column="0" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="50">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
                     <Label Grid.Column="1" x:Name="txttitulo" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="Carregando..." TextColor="White" FontSize="28" VerticalTextAlignment="Center" HorizontalOptions="Center"/>
                 </Grid>
             </Frame>
             <Frame Grid.Row="1" CornerRadius="15" Margin="15,0,15,0" BackgroundColor="#202124" Padding="25" VerticalOptions="Fill">
-                <FlexLayout x:Name="lst" Direction="Row" Wrap="Wrap"  AlignItems="Center" >
-                    <!--#region -->
 
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate  >
+                <ScrollView  HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" >
 
-                            <StackLayout WidthRequest="100">
-                                <Frame  BackgroundColor="Black" Padding="0" Margin="15,0,15,0" CornerRadius="7" >
-                                    <ff:CachedImage Source="{Binding ImagemUrl}"/>
-                                </Frame>
-                                <Label Text="{Binding Detalhe}"  TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18"  HorizontalTextAlignment="Center"/>
-                            </StackLayout>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+                    <FlexLayout x:Name="lst" Direction="Row" Wrap="Wrap"  AlignItems="Center" BindableLayout.ItemsSource="{Binding Detalhes1}">
+                        <!--#region -->
 
-                    <!--#endregion-->
-                    
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate  >
 
-                </FlexLayout>
+                                <StackLayout WidthRequest="100" Margin="0,10,0,10">
+                                    <Frame  BackgroundColor="Black" Padding="0" Margin="15,0,15,0" CornerRadius="7" >
+                                        <ff:CachedImage Source="{Binding ImagemUrl}"/>
+                                    </Frame>
+                                    <Label Text="{Binding Detalhe}"  TextColor="White" Style="{StaticResource BebasBoldLabelStyle}" FontSize="18"  HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+
+                        <!--#endregion-->
+
+
+                    </FlexLayout>
+
+                </ScrollView>
             </Frame>
             <Frame Grid.Row="2" BackgroundColor="Transparent"  Padding="0" VerticalOptions="End">
                 <Grid>
@@ -56,9 +65,17 @@
                         <ColumnDefinition Width="45" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="1" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="40"/>
-                    <Button Grid.Column="2" Text="Procurar"></Button>
-                    <Label Grid.Column="3"  Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&gt;" TextColor="White" HorizontalOptions="End" FontSize="40" />
+                    <Label Grid.Column="1" Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&lt;" TextColor="White" FontSize="40">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <ImageButton Grid.Column="2" Source="search1" HeightRequest="1" WidthRequest="10" Padding="15" BackgroundColor="Transparent"></ImageButton>
+                    <Label Grid.Column="3"  Style="{StaticResource BebasEntryStyle}" Padding="15" Text="&gt;" TextColor="White" HorizontalOptions="End" FontSize="40" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </Grid>
             </Frame>
         </Grid>
