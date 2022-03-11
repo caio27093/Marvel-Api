@@ -1,4 +1,5 @@
 ﻿using Marvel.View;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -136,17 +137,69 @@ namespace Marvel.Classes
                 if (MainPage.quadrinhos.Datas.Results.Count > (DetalhesDaPagina.offset_Quadrinhos))
                 {
 
-                    //Quadrinhos
-                    for (int i = DetalhesDaPagina.offset_Quadrinhos; i < (DetalhesDaPagina.offset_Quadrinhos + 15); i++)
+                    if ((MainPage.quadrinhos.Datas.Results.Count - (DetalhesDaPagina.offset_Quadrinhos + 15)) < 15)
                     {
+                        //Quadrinhos
+                        for (int i = DetalhesDaPagina.offset_Quadrinhos; i < (MainPage.quadrinhos.Datas.Results.Count); i++)
+                        {
 
-                        Detalhes.Add(new DetalhesClass() { Detalhe = MainPage.quadrinhos.Datas.Results[Convert.ToInt32(i)].Title, ImagemUrl = MainPage.quadrinhos.Datas.Results[Convert.ToInt32(i)].Thumbnail.Path + "." + MainPage.quadrinhos.Datas.Results[Convert.ToInt32(i)].Thumbnail.Extension });
+                            Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Title, ImagemUrl = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
 
+                        }
                     }
+                    else
+                    {
+                        //Quadrinhos
+                        for (int i = DetalhesDaPagina.offset_Quadrinhos; i < (DetalhesDaPagina.offset_Quadrinhos + 15); i++)
+                        {
+
+                            Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Title, ImagemUrl = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
+
+                        }
+                    }
+                        
                 }
                 else
                 {
-                    DependencyService.Get<Interfaces.IMessage>().LongAlert("Ainda não disponivel");
+
+                    try
+                    {
+                        Quadrinhos.Root QuadrinhosPesquisado;
+                        string result;
+                        string url = ConstantesChaves.url_fixa + "comics?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash + "&offset=" + ConstantesChaves.offset_quadrinhos;
+                        ConstantesChaves.offset_quadrinhos = ConstantesChaves.offset_quadrinhos + 100;
+                        HttpWebRequest request1;
+                        request1 = (HttpWebRequest)WebRequest.Create ( url );
+                        request1.Headers.Clear ( );
+                        request1.ContentType = "application/json";
+                        request1.Method = "GET";
+                        WebResponse retorno1 = request1.GetResponse ( );
+
+                        using (Stream stream1 = request1.GetResponse ( ).GetResponseStream ( ))
+                        {
+                            StreamReader reader1 = new StreamReader ( stream1, Encoding.UTF8 );
+
+                            result = reader1.ReadToEnd ( );
+                        }
+                        QuadrinhosPesquisado = JsonConvert.DeserializeObject<Quadrinhos.Root> ( result );
+                        QuadrinhosPesquisado.Datas.Results.ForEach ( objQuadrinhos => MainPage.quadrinhos.Datas.Results.Add ( objQuadrinhos ) );
+
+                        DetalhesDaPagina.offset_Quadrinhos = DetalhesDaPagina.offset_Quadrinhos + 15;
+
+                        for (int i = DetalhesDaPagina.offset_Quadrinhos; i < (DetalhesDaPagina.offset_Quadrinhos + 15); i++)
+                        {
+
+                            Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Title, ImagemUrl = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
+
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        DependencyService.Get<Interfaces.IMessage> ( ).LongAlert ( "Acabaram os quadrinhos )-;" );
+                    }
+
+
                 }
             }
             else
@@ -154,34 +207,67 @@ namespace Marvel.Classes
                 if (MainPage.personagens.Data.Results.Count > DetalhesDaPagina.offset_Personagens)
                 {
                     //Personagens
-                    for (int i = DetalhesDaPagina.offset_Personagens; i < (DetalhesDaPagina.offset_Personagens + 15); i++)
+                    if ((MainPage.personagens.Data.Results.Count-(DetalhesDaPagina.offset_Personagens + 15))<15)
                     {
 
-                        Detalhes.Add(new DetalhesClass() { Detalhe = MainPage.personagens.Data.Results[Convert.ToInt32(i)].Name, ImagemUrl = MainPage.personagens.Data.Results[Convert.ToInt32(i)].Thumbnail.Path + "." + MainPage.personagens.Data.Results[Convert.ToInt32(i)].Thumbnail.Extension });
+                        for (int i = DetalhesDaPagina.offset_Personagens; i < MainPage.personagens.Data.Results.Count; i++)
+                        {
 
+                            Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Name, ImagemUrl = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
+
+                        }
+                    }
+                    else
+                    {
+                        for (int i = DetalhesDaPagina.offset_Personagens; i < (DetalhesDaPagina.offset_Personagens + 15); i++)
+                        {
+
+                            Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Name, ImagemUrl = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
+
+                        }
                     }
                 }
                 else
                 {
-                    string result;
-                    string url = ConstantesChaves.url_fixa + "characters?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash;
-                    HttpWebRequest request1;
-                    request1 = (HttpWebRequest)WebRequest.Create(url);
-                    request1.Headers.Clear();
-                    request1.ContentType = "application/json";
-                    request1.Method = "GET";
-                    WebResponse retorno1 = request1.GetResponse();
-
-                    using (Stream stream1 = request1.GetResponse().GetResponseStream())
+                    try
                     {
-                        StreamReader reader1 = new StreamReader(stream1, Encoding.UTF8);
+                        Personagens.Root PersonagensPesquisado;
+                        string result;
+                        string url = ConstantesChaves.url_fixa + "characters?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash+ "&offset=" + ConstantesChaves.offset_personagens ;
+                        ConstantesChaves.offset_personagens = ConstantesChaves.offset_personagens + 100;
+                        HttpWebRequest request1;
+                        request1 = (HttpWebRequest)WebRequest.Create ( url );
+                        request1.Headers.Clear ( );
+                        request1.ContentType = "application/json";
+                        request1.Method = "GET";
+                        WebResponse retorno1 = request1.GetResponse ( );
 
-                        result = reader1.ReadToEnd();
+                        using (Stream stream1 = request1.GetResponse ( ).GetResponseStream ( ))
+                        {
+                            StreamReader reader1 = new StreamReader ( stream1, Encoding.UTF8 );
+
+                            result = reader1.ReadToEnd ( );
+                        }
+                        PersonagensPesquisado = JsonConvert.DeserializeObject<Personagens.Root> ( result );
+                        PersonagensPesquisado.Data.Results.ForEach ( objPersonagem => MainPage.personagens.Data.Results.Add( objPersonagem ) );
+
+                        DetalhesDaPagina.offset_Personagens = DetalhesDaPagina.offset_Personagens + 15;
+
+                        for (int i = DetalhesDaPagina.offset_Personagens; i < (DetalhesDaPagina.offset_Personagens + 15); i++)
+                        {
+
+                            Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Name, ImagemUrl = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
+
+                        }
+
                     }
+                    catch (Exception ex)
+                    {
+                        DependencyService.Get<Interfaces.IMessage> ( ).LongAlert ( "Depois desses personagens somente o The One Above All" );
+                    }//tratar exception
 
                 }
             }
-
 
         }
         public ObservableCollection<DetalhesClass> Detalhes = new ObservableCollection<DetalhesClass>();
