@@ -146,6 +146,38 @@ namespace Marvel.Classes
                             Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Title, ImagemUrl = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
 
                         }
+
+                        int j = DetalhesDaPagina.offset_Quadrinhos;
+
+                        Quadrinhos.Root QuadrinhosPesquisado;
+                        string result;
+                        string url = ConstantesChaves.url_fixa + "comics?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash + "&offset=" + ConstantesChaves.offset_quadrinhos;
+                        ConstantesChaves.offset_quadrinhos = ConstantesChaves.offset_quadrinhos + 100;
+                        HttpWebRequest request1;
+                        request1 = (HttpWebRequest)WebRequest.Create ( url );
+                        request1.Headers.Clear ( );
+                        request1.ContentType = "application/json";
+                        request1.Method = "GET";
+                        WebResponse retorno1 = request1.GetResponse ( );
+
+                        using (Stream stream1 = request1.GetResponse ( ).GetResponseStream ( ))
+                        {
+                            StreamReader reader1 = new StreamReader ( stream1, Encoding.UTF8 );
+
+                            result = reader1.ReadToEnd ( );
+                        }
+                        QuadrinhosPesquisado = JsonConvert.DeserializeObject<Quadrinhos.Root> ( result );
+                        QuadrinhosPesquisado.Datas.Results.ForEach ( objQuadrinhos => MainPage.quadrinhos.Datas.Results.Add ( objQuadrinhos ) );
+
+
+                        for (int i = j; i == j + (15 - Detalhes.Count); i++)
+                        {
+                            Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Title, ImagemUrl = MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
+                        }
+
+
+                        DetalhesDaPagina.offset_Quadrinhos = DetalhesDaPagina.offset_Quadrinhos + 15;
+
                     }
                     else
                     {
@@ -216,6 +248,37 @@ namespace Marvel.Classes
                             Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Name, ImagemUrl = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
 
                         }
+
+                        //carrega o resto
+                        int j = MainPage.personagens.Data.Results.Count;
+                        Personagens.Root PersonagensPesquisado;
+                        string result;
+                        string url = ConstantesChaves.url_fixa + "characters?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash + "&offset=" + ConstantesChaves.offset_personagens;
+                        ConstantesChaves.offset_personagens = ConstantesChaves.offset_personagens + 100;
+                        HttpWebRequest request1;
+                        request1 = (HttpWebRequest)WebRequest.Create ( url );
+                        request1.Headers.Clear ( );
+                        request1.ContentType = "application/json";
+                        request1.Method = "GET";
+                        WebResponse retorno1 = request1.GetResponse ( );
+
+                        using (Stream stream1 = request1.GetResponse ( ).GetResponseStream ( ))
+                        {
+                            StreamReader reader1 = new StreamReader ( stream1, Encoding.UTF8 );
+
+                            result = reader1.ReadToEnd ( );
+                        }
+                        PersonagensPesquisado = JsonConvert.DeserializeObject<Personagens.Root> ( result );
+                        PersonagensPesquisado.Data.Results.ForEach ( objPersonagem => MainPage.personagens.Data.Results.Add ( objPersonagem ) );
+
+
+                        for (int i = j; i == j+(15-Detalhes.Count); i++)
+                        {
+
+                            Detalhes.Add ( new DetalhesClass ( ) { Detalhe = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Name, ImagemUrl = MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Path + "." + MainPage.personagens.Data.Results[Convert.ToInt32 ( i )].Thumbnail.Extension } );
+                        }
+
+                        DetalhesDaPagina.offset_Personagens = DetalhesDaPagina.offset_Personagens + 15;
                     }
                     else
                     {
@@ -233,7 +296,7 @@ namespace Marvel.Classes
                     {
                         Personagens.Root PersonagensPesquisado;
                         string result;
-                        string url = ConstantesChaves.url_fixa + "characters?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash+ "&offset=" + ConstantesChaves.offset_personagens ;
+                        string url = ConstantesChaves.url_fixa + "characters?limit=100&ts=" + ConstantesChaves.timestamp + "&apikey=" + ConstantesChaves.chave_publica + "&hash=" + ConstantesChaves.hash + "&offset=" + ConstantesChaves.offset_personagens;
                         ConstantesChaves.offset_personagens = ConstantesChaves.offset_personagens + 100;
                         HttpWebRequest request1;
                         request1 = (HttpWebRequest)WebRequest.Create ( url );
@@ -249,9 +312,8 @@ namespace Marvel.Classes
                             result = reader1.ReadToEnd ( );
                         }
                         PersonagensPesquisado = JsonConvert.DeserializeObject<Personagens.Root> ( result );
-                        PersonagensPesquisado.Data.Results.ForEach ( objPersonagem => MainPage.personagens.Data.Results.Add( objPersonagem ) );
+                        PersonagensPesquisado.Data.Results.ForEach ( objPersonagem => MainPage.personagens.Data.Results.Add ( objPersonagem ) );
 
-                        DetalhesDaPagina.offset_Personagens = DetalhesDaPagina.offset_Personagens + 15;
 
                         for (int i = DetalhesDaPagina.offset_Personagens; i < (DetalhesDaPagina.offset_Personagens + 15); i++)
                         {
