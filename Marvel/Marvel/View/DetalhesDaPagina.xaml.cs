@@ -30,8 +30,8 @@ namespace Marvel.View
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            offset_Quadrinhos = 1;
-            offset_Personagens = 1;
+            Classes.ConstantesChaves.offset_personagens = 1;
+            Classes.ConstantesChaves.offset_quadrinhos = 1;
             Application.Current.MainPage = new NavigationPage(new MainPage());
         }
 

@@ -1,11 +1,13 @@
 ﻿using Marvel.View;
 using Newtonsoft.Json;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Marvel.Classes
@@ -40,22 +42,22 @@ namespace Marvel.Classes
         public int terceiro;
         public int quarto;
         public int quinto;
-        public StackLayoutViewModel()
+        public StackLayoutViewModel ( )
         {
             string imagemIndisponivel = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available";
-            Random rdn = new Random();
-            primeiro = rdn.Next(0, 19);
-            segundo = rdn.Next(20, 39);
-            terceiro = rdn.Next(40, 59);
-            quarto = rdn.Next(60, 79);
-            quinto = rdn.Next(80, 99);
+            Random rdn = new Random ( );
+            primeiro = rdn.Next ( 0, 19 );
+            segundo = rdn.Next ( 20, 39 );
+            terceiro = rdn.Next ( 40, 59 );
+            quarto = rdn.Next ( 60, 79 );
+            quinto = rdn.Next ( 80, 99 );
             bool continua = true;
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(primeiro)].Thumbnail.Path == imagemIndisponivel)
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( primeiro )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
-                    primeiro = rdn.Next(0, 19);
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(primeiro)].Thumbnail.Path != imagemIndisponivel)
+                    primeiro = rdn.Next ( 0, 19 );
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( primeiro )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -63,12 +65,12 @@ namespace Marvel.Classes
                 continua = true;
             }
 
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(segundo)].Thumbnail.Path == imagemIndisponivel)
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( segundo )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
-                    segundo = rdn.Next(20, 39);
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(segundo)].Thumbnail.Path != imagemIndisponivel)
+                    segundo = rdn.Next ( 20, 39 );
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( segundo )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -76,12 +78,12 @@ namespace Marvel.Classes
                 continua = true;
             }
 
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(terceiro)].Thumbnail.Path == imagemIndisponivel)
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( terceiro )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
-                    terceiro = rdn.Next(40, 59);
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(terceiro)].Thumbnail.Path != imagemIndisponivel)
+                    terceiro = rdn.Next ( 40, 59 );
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( terceiro )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -89,12 +91,12 @@ namespace Marvel.Classes
                 continua = true;
             }
 
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(quarto)].Thumbnail.Path == imagemIndisponivel)
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quarto )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
-                    quarto = rdn.Next(60, 79);
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(quarto)].Thumbnail.Path != imagemIndisponivel)
+                    quarto = rdn.Next ( 60, 79 );
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quarto )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -102,12 +104,12 @@ namespace Marvel.Classes
                 continua = true;
             }
 
-            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(quinto)].Thumbnail.Path == imagemIndisponivel)
+            if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quinto )].Thumbnail.Path == imagemIndisponivel)
             {
                 do
                 {
-                    quinto = rdn.Next(80, 99);
-                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32(quinto)].Thumbnail.Path != imagemIndisponivel)
+                    quinto = rdn.Next ( 80, 99 );
+                    if (MainPage.quadrinhos.Datas.Results[Convert.ToInt32 ( quinto )].Thumbnail.Path != imagemIndisponivel)
                     {
                         continua = false;
                     }
@@ -126,12 +128,27 @@ namespace Marvel.Classes
         public ObservableCollection<StackLayoutClass> Quadrinhos { get; set; }
     }
 
+    public class ClasseLoading
+    {
+        public async void AbrirLoading ( )
+        {
+            PopUpViews.LoadingView loading = new PopUpViews.LoadingView ( );
+            await PopupNavigation.Instance.PushAsync ( loading, true );
+        }
 
+        public async void FecharLoading ( )
+        {
+            await PopupNavigation.Instance.PopAsync ( );
+        }
+    }
 
     public class DetalhesViewModel
     {
-        public DetalhesViewModel(int tipo)
+        public DetalhesViewModel ( int tipo )
         {
+            ClasseLoading cl = new ClasseLoading ( );
+
+            cl.AbrirLoading ( );
             if (tipo == 1)
             {
                 if (MainPage.quadrinhos.Datas.Results.Count > (DetalhesDaPagina.offset_Quadrinhos))
@@ -193,7 +210,6 @@ namespace Marvel.Classes
                 }
                 else
                 {
-
                     try
                     {
                         Quadrinhos.Root QuadrinhosPesquisado;
@@ -230,8 +246,6 @@ namespace Marvel.Classes
                     {
                         DependencyService.Get<Interfaces.IMessage> ( ).LongAlert ( "Acabaram os quadrinhos )-;" );
                     }
-
-
                 }
             }
             else
@@ -241,7 +255,6 @@ namespace Marvel.Classes
                     //Personagens
                     if ((MainPage.personagens.Data.Results.Count-(DetalhesDaPagina.offset_Personagens + 15))<15)
                     {
-
                         for (int i = DetalhesDaPagina.offset_Personagens; i < MainPage.personagens.Data.Results.Count; i++)
                         {
 
@@ -330,7 +343,7 @@ namespace Marvel.Classes
 
                 }
             }
-
+            cl.FecharLoading ( );
         }
         public ObservableCollection<DetalhesClass> Detalhes = new ObservableCollection<DetalhesClass>();
         public ObservableCollection<DetalhesClass> Detalhes1 { get { return Detalhes; } set { Detalhes = value; } }

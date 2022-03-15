@@ -18,6 +18,7 @@ namespace Marvel.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Rg.Plugins.Popup.Popup.Init ( this );
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(34, 34, 34));
